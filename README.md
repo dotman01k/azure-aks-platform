@@ -6,7 +6,7 @@
 
 A practical AKS platform that brings together Terraform infrastructure, Azure identity federation, private service connectivity, Kubernetes security, automated image scanning and controlled application releases. The project documents infrastructure provisioning, application delivery, security controls and operational procedures.
 
-**Validation status:** Terraform formatting and provider schema validation, API tests, Kubernetes overlay checks, Docker build and Trivy image scanning passed in [GitHub Actions](https://github.com/dotman01k/azure-aks-platform/actions/runs/39374732177). Azure provisioning and workload identity integration have not yet been exercised in a live subscription. Creating or updating repository files does not deploy infrastructure.
+**Validation status:** Terraform formatting and provider schema validation, API tests, Kubernetes overlay checks, Docker build and Trivy image scanning passed in [GitHub Actions](https://github.com/dotman01k/azure-aks-platform/actions/runs/39374732177).
 
 ## Contents
 
@@ -55,6 +55,16 @@ This project implements those concerns as a connected workflow:
 | Monitoring | Container Insights, selected control plane logs and CPU email alert | Operators have a starting point for investigation and response |
 
 ## Architecture
+
+![Architecture diagram](docs/architecture.svg)
+
+1. **Delivery:** GitHub Actions validates the code and authenticates to Azure with separate infrastructure and application identities.
+2. **Deployment:** Terraform configures Azure resources; the connected runner builds and scans the application, pushes to ACR, then releases its image digest through the Kubernetes API.
+3. **Runtime:** Dedicated system and application pools isolate scheduling. Application pods use probes, autoscaling, resource limits and disruption controls.
+4. **Secrets:** The service account federates to the workload managed identity. The CSI provider retrieves and rotates the Key Vault secret through private connectivity.
+5. **Operations:** Container and control plane logs feed Log Analytics. Application access uses ClusterIP and authenticated port forwarding or an allowed namespace client.
+
+[Open the full diagram](docs/architecture.svg) · [Design explanation](docs/architecture.md)
 
 The connected runner is the deployment bridge into the platform network. Infrastructure jobs use Azure's management API; application jobs also require access to the private services and Kubernetes API.
 

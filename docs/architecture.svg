@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1090" viewBox="0 0 1600 1090" role="img" aria-labelledby="title desc"><title id="title">Azure Kubernetes Service platform</title><desc id="desc">Federated delivery, isolated node pools and managed application identity</desc><defs>
+<marker id="blue" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4 L0,8 Z" fill="#0078d4"/></marker>
+<marker id="purple" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4 L0,8 Z" fill="#7155c7"/></marker>
+<marker id="green" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4 L0,8 Z" fill="#16836b"/></marker>
+<marker id="gray" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4 L0,8 Z" fill="#52677d"/></marker>
+</defs>
+<rect width="1600" height="1090" fill="#f4f8fc"/>
+<rect x="0" y="0" width="1600" height="10" fill="#0078d4"/>
+<text x="60" y="65" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#18334d">Azure Kubernetes Service platform</text>
+<text x="60" y="104" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52677d">Federated delivery, isolated node pools and managed application identity</text>
+<rect x="60" y="140" width="1480" height="155" rx="16" fill="#e8f2fc" stroke="#d7e3ee" stroke-width="2"/>
+<text x="84" y="176" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">DELIVERY</text>
+<text x="84" y="202" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#52677d">GitHub OIDC federation separates infrastructure and application permissions</text>
+<rect x="85" y="220" width="300" height="55" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<circle cx="115" cy="250" r="16" fill="#0078d4"/>
+<text x="110" y="256" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="white">1</text>
+<text x="143" y="256" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">GitHub Actions</text>
+<rect x="475" y="220" width="420" height="55" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<circle cx="505" cy="250" r="16" fill="#0078d4"/>
+<text x="500" y="256" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="white">2</text>
+<text x="533" y="256" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">Infrastructure + app identities</text>
+<rect x="985" y="220" width="530" height="55" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<circle cx="1015" cy="250" r="16" fill="#0078d4"/>
+<text x="1010" y="256" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="white">3</text>
+<text x="1043" y="256" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">Trusted runner with network access</text>
+<path d="M385 248 H475" fill="none" stroke="#0078d4" stroke-width="3" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M895 248 H985" fill="none" stroke="#0078d4" stroke-width="3" stroke-linejoin="round" marker-end="url(#blue)"/>
+<rect x="60" y="345" width="1000" height="590" rx="16" fill="#eef5fc" stroke="#d7e3ee" stroke-width="2"/>
+<text x="84" y="381" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">AKS CLUSTER</text>
+<text x="84" y="407" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#52677d">Entra RBAC | local admin disabled | production API is private</text>
+<rect x="85" y="435" width="950" height="75" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="109" y="471" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">Control plane and Kubernetes API</text>
+<path d="M680 295 V435" fill="none" stroke="#0078d4" stroke-width="3" stroke-linejoin="round" marker-end="url(#blue)"/>
+<rect x="695" y="309" width="154.0" height="29" rx="7" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="707" y="329" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#0078d4">Terraform / ARM</text>
+<path d="M1120 295 V320 H930 V435" fill="none" stroke="#0078d4" stroke-width="3" stroke-linejoin="round" marker-end="url(#blue)"/>
+<rect x="950" y="321" width="120.4" height="29" rx="7" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="962" y="341" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#0078d4">App release</text>
+<rect x="85" y="570" width="285" height="310" rx="16" fill="#f7f9fc" stroke="#d7e3ee" stroke-width="2"/>
+<text x="109" y="606" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">SYSTEM NODE POOL</text>
+<text x="109" y="632" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#52677d">Critical add-ons</text>
+<text x="108" y="675" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#18334d">System workload taint</text>
+<text x="108" y="713" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#18334d">Autoscaling enabled</text>
+<text x="108" y="751" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Prod: 3+ nodes / 3 zones</text>
+<rect x="415" y="570" width="620" height="310" rx="16" fill="#eef9f5" stroke="#d7e3ee" stroke-width="2"/>
+<text x="439" y="606" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">APPLICATION NODE POOL</text>
+<text x="439" y="632" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#52677d">Dedicated taint, toleration and node selector</text>
+<rect x="440" y="665" width="570" height="180" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<circle cx="470" cy="695" r="16" fill="#16836b"/>
+<text x="465" y="701" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="white">4</text>
+<text x="498" y="701" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">Application pods</text>
+<text x="464" y="732" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Restricted pod security; non-root runtime</text>
+<text x="464" y="758" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Read-only root filesystem and resource limits</text>
+<text x="464" y="784" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Probes + HPA + disruption budget</text>
+<text x="464" y="810" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Service account → workload OIDC → CSI mount</text>
+<path d="M730 510 V570" fill="none" stroke="#52677d" stroke-width="3" stroke-linejoin="round" marker-end="url(#gray)"/>
+<rect x="1140" y="405" width="400" height="150" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="1164" y="441" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">Azure Container Registry</text>
+<text x="1164" y="472" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Runner pushes scanned image</text>
+<text x="1164" y="498" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Kubelet identity has AcrPull</text>
+<text x="1164" y="524" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Release uses immutable digest</text>
+<path d="M1370 295 V405" fill="none" stroke="#16836b" stroke-width="3" stroke-linejoin="round" marker-end="url(#green)"/>
+<rect x="1385" y="347" width="61.6" height="29" rx="7" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="1397" y="367" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#0078d4">Push</text>
+<path d="M1140 500 H1090 V625 H1035" fill="none" stroke="#16836b" stroke-width="3" stroke-linejoin="round" marker-end="url(#green)"/>
+<rect x="1090" y="581" width="61.6" height="29" rx="7" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="1102" y="601" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#16836b">Pull</text>
+<rect x="1140" y="620" width="400" height="150" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<circle cx="1170" cy="650" r="16" fill="#7155c7"/>
+<text x="1165" y="656" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="white">5</text>
+<text x="1198" y="656" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">Private Azure Key Vault</text>
+<text x="1164" y="687" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Workload identity: Secrets User</text>
+<text x="1164" y="713" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">CSI secret mount and rotation</text>
+<text x="1164" y="739" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Private endpoint + private DNS</text>
+<path d="M1010 740 H1140" fill="none" stroke="#7155c7" stroke-width="3" stroke-linejoin="round" marker-end="url(#purple)"/>
+<rect x="1026" y="701" width="53.2" height="29" rx="7" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="1038" y="721" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#7155c7">CSI</text>
+<rect x="1140" y="835" width="400" height="95" rx="16" fill="white" stroke="#d7e3ee" stroke-width="2"/>
+<text x="1164" y="871" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#18334d">Log Analytics</text>
+<text x="1164" y="902" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#52677d">Container + control plane logs</text>
+<path d="M1035 830 H1090 V880 H1140" fill="none" stroke="#52677d" stroke-width="3" stroke-linejoin="round" marker-end="url(#gray)"/>
+<text x="70" y="983" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#0078d4">APPLICATION ACCESS</text>
+<text x="70" y="1015" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#18334d">ClusterIP service with authenticated port forwarding, or an allowed client in the application namespace.</text>
+<text x="70" y="1047" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#52677d">Production: private API and ACR; three-zone node pools. Key Vault is private in both environments.</text>
+</svg>

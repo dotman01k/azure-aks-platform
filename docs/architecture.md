@@ -1,5 +1,15 @@
 # Design decisions and boundaries
 
+![Architecture diagram](architecture.svg)
+
+## Read the diagram
+
+1. **Delivery:** GitHub Actions validates the code and authenticates to Azure with separate infrastructure and application identities.
+2. **Deployment:** Terraform configures Azure resources; the connected runner builds and scans the application, pushes to ACR, then releases its image digest through the Kubernetes API.
+3. **Runtime:** Dedicated system and application pools isolate scheduling. Application pods use probes, autoscaling, resource limits and disruption controls.
+4. **Secrets:** The service account federates to the workload managed identity. The CSI provider retrieves and rotates the Key Vault secret through private connectivity.
+5. **Operations:** Container and control plane logs feed Log Analytics. Application access uses ClusterIP and authenticated port forwarding or an allowed namespace client.
+
 ## Separation of responsibility
 
 Terraform manages Azure infrastructure. Kubernetes namespace, service-account identity binding and network policies are initialized by the infrastructure identity. Routine application releases use a distinct managed identity with AcrPush, AKS Cluster User, and AKS RBAC Writer scoped to `/namespaces/portfolio`. A human Entra admin group provides recovery access; local admin credentials are disabled.

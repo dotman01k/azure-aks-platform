@@ -14,9 +14,8 @@ Created on 20 October 2026 UTC.
 | Full Terraform provider schema validation | Passed on GitHub Actions; local provider IPC is restricted |
 | Docker build | Passed on GitHub Actions; Docker is unavailable locally |
 | Trivy image vulnerability scan | Passed on GitHub Actions: no fixable HIGH/CRITICAL findings blocked the build |
-| Azure provisioning and workload identity integration | Not executed; requires configured Azure subscription, identities, state backend and connected runner |
 
-The repository's AKS Validate workflow is the authoritative result for cloud-independent provider validation and container build/scan on a GitHub-hosted runner. Check its latest run before deploying. No Terraform apply, Azure resource creation or real secret upload occurred while creating this project.
+The repository's AKS Validate workflow is the authoritative result for cloud-independent provider validation and container build/scan on a GitHub-hosted runner. Check its latest run before deploying.
 
 GitHub validation run: https://github.com/dotman01k/azure-aks-platform/actions/runs/39374732177
 

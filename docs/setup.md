@@ -83,7 +83,7 @@ Example placeholders must be replaced. For a runner in the generated subnet, use
 
 ## 3. Provision infrastructure
 
-In Actions, run **AKS Infrastructure** with `environment=dev`, `operation=plan`. No Azure creation occurs during a normal Terraform plan, but Azure reads and state locking do occur. Review the saved plan artifact and job output.
+In Actions, run **AKS Infrastructure** with `environment=dev`, `operation=plan`. Review the saved plan artifact and job output.
 
 To apply, run with `operation=apply`. The plan job produces a new saved plan; review **that run's** `plan.txt` before approving the apply environment. The apply job downloads the plan from the same workflow run. If environment reviewers are not configured, no approval pause exists. Saved plans contain configuration and may be sensitive; artifact retention is one day. This example deliberately has no real application secrets in Terraform inputs or state.
 
