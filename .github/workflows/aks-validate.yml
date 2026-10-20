@@ -28,7 +28,7 @@ jobs:
       - name: Shell syntax
         run: |
           for script in scripts/*.sh; do bash -n "$script"; done
-      - uses: azure/setup-kubectl@v4
+      - uses: azure/setup-kubectl@v5
         with: {version: v1.34.1}
       - name: Kubernetes overlay checks
         run: |
