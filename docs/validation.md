@@ -18,6 +18,6 @@ Created on 20 October 2026 UTC.
 
 The repository's AKS Validate workflow is the authoritative result for cloud-independent provider validation and container build/scan on a GitHub-hosted runner. Check its latest run before deploying. No Terraform apply, Azure resource creation or real secret upload occurred while creating this project.
 
-GitHub validation run: https://github.com/dotman01k/azure-client/actions/runs/39373255805
+GitHub validation run: https://github.com/dotman01k/azure-aks-platform/actions/runs/39374732177
 
-The linked run validated the original project before extraction into its dedicated repository. Check this repository’s own workflow results for the relocated layout.
+The linked run passed in this dedicated repository after the workflow paths and documentation were updated for the standalone layout.

@@ -6,7 +6,7 @@
 
 A practical AKS platform that brings together Terraform infrastructure, Azure identity federation, private service connectivity, Kubernetes security, automated image scanning and controlled application releases. The project is designed for hands on learning and for demonstrating engineering decisions during Azure and DevOps interviews.
 
-**Validation status:** Terraform formatting and provider schema validation, API tests, Kubernetes overlay checks, Docker build and Trivy image scanning passed in [GitHub Actions](https://github.com/dotman01k/azure-client/actions/runs/39373255805). Azure provisioning and workload identity integration have not yet been exercised in a live subscription. Creating or updating repository files does not deploy infrastructure.
+**Validation status:** Terraform formatting and provider schema validation, API tests, Kubernetes overlay checks, Docker build and Trivy image scanning passed in [GitHub Actions](https://github.com/dotman01k/azure-aks-platform/actions/runs/39374732177). Azure provisioning and workload identity integration have not yet been exercised in a live subscription. Creating or updating repository files does not deploy infrastructure.
 
 ## Contents
 
@@ -71,7 +71,8 @@ flowchart TD
     Apps[Application node pool]
     Service[Portfolio API pods]
     Private[Private service endpoints]
-    System --> Apps
+    Control --> System
+    Control --> Apps
     Apps --> Service
     Service -->|Workload identity and CSI mount| Private
   end
