@@ -2,9 +2,9 @@
 
 [![AKS Validate](https://github.com/dotman01k/azure-aks-platform/actions/workflows/aks-validate.yml/badge.svg)](https://github.com/dotman01k/azure-aks-platform/actions/workflows/aks-validate.yml)
 
-**Author: Dotun Agbeluyi | Azure Cloud and DevOps Engineer**
+**Author: Dotun Agbeluyi**
 
-A practical AKS platform that brings together Terraform infrastructure, Azure identity federation, private service connectivity, Kubernetes security, automated image scanning and controlled application releases. The project is designed for hands on learning and for demonstrating engineering decisions during Azure and DevOps interviews.
+A practical AKS platform that brings together Terraform infrastructure, Azure identity federation, private service connectivity, Kubernetes security, automated image scanning and controlled application releases. The project documents infrastructure provisioning, application delivery, security controls and operational procedures.
 
 **Validation status:** Terraform formatting and provider schema validation, API tests, Kubernetes overlay checks, Docker build and Trivy image scanning passed in [GitHub Actions](https://github.com/dotman01k/azure-aks-platform/actions/runs/39374732177). Azure provisioning and workload identity integration have not yet been exercised in a live subscription. Creating or updating repository files does not deploy infrastructure.
 
@@ -23,7 +23,7 @@ A practical AKS platform that brings together Terraform infrastructure, Azure id
 11. [Observability and operations](#observability-and-operations)
 12. [Validation and troubleshooting](#validation-and-troubleshooting)
 13. [Cost management and cleanup](#cost-management-and-cleanup)
-14. [Portfolio walkthrough and limitations](#portfolio-walkthrough-and-limitations)
+14. [Project scope and limitations](#project-scope-and-limitations)
 
 ## Problem and project goals
 
@@ -69,7 +69,7 @@ flowchart TD
   subgraph Network[Azure platform VNet]
     System[System node pool]
     Apps[Application node pool]
-    Service[Portfolio API pods]
+    Service[Application API pods]
     Private[Private service endpoints]
     Control --> System
     Control --> Apps
@@ -120,7 +120,7 @@ Paths below are relative to this project directory.
 | [k8s/app](k8s/app) | Application base resources and environment Kustomize overlays |
 | [scripts](scripts) | Azure bootstrap, Terraform initialization, cluster login and release helpers |
 | [tests](tests) | HTTP API behavior tests and rendered manifest checks |
-| [docs](docs) | Setup, architecture, runbook, validation evidence and interview walkthrough |
+| [docs](docs) | Setup, architecture, operations runbook and validation evidence |
 | [GitHub workflows](.github/workflows) | Validation, infrastructure, platform initialization and application release |
 
 ## Prerequisites
@@ -333,13 +333,13 @@ Use Azure Pricing Calculator for a current estimate before deployment. Log inges
 
 There is deliberately no destroy workflow. For a disposable lab, review the correct subscription, backend key and `terraform plan -destroy` before deleting anything. Follow [cleanup guidance](docs/operations.md#cleanup). Terraform destroy retains bootstrap resource groups, identities and state storage. Key Vault purge protection and retention can prevent immediate name reuse.
 
-## Portfolio walkthrough and limitations
+## Project scope and limitations
 
-This project demonstrates practical decisions about Terraform state, CI federation, workload identity, private DNS, RBAC, autoscaling, release health and operational boundaries. Use the [interview walkthrough](docs/interview-walkthrough.md) to explain the design and its tradeoffs.
+This project defines AKS infrastructure, workload deployment, access controls and operational procedures. The architecture and operations documentation describe the implemented design, its tradeoffs and its current limitations.
 
 The production example still needs target-subscription deployment tests, security review and organization-specific decisions before production use. It does not configure business data backups, disaster recovery, Azure Firewall, Defender plans, managed Prometheus, ingress/TLS, SLOs or maintenance windows. The Azure Policy add-on is enabled, but organizational policy assignments are not included.
 
-This project has its own dedicated repository. Future portfolio projects will be maintained in separate repositories with their own README, workflows and documentation.
+This project has its own dedicated repository. Future projects will be maintained in separate repositories with their own README, workflows and documentation.
 
 ## Further documentation
 
@@ -347,8 +347,7 @@ This project has its own dedicated repository. Future portfolio projects will be
 2. [Architecture decisions](docs/architecture.md)
 3. [Operations and rollback runbook](docs/operations.md)
 4. [Validation evidence](docs/validation.md)
-5. [Interview walkthrough](docs/interview-walkthrough.md)
-6. [Azure CNI powered by Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium)
-7. [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview)
-8. [Key Vault CSI identity access](https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access)
-9. [Pinned AzureRM AKS resource documentation](https://registry.terraform.io/providers/hashicorp/azurerm/4.52.0/docs/resources/kubernetes_cluster)
+5. [Azure CNI powered by Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium)
+6. [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview)
+7. [Key Vault CSI identity access](https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access)
+8. [Pinned AzureRM AKS resource documentation](https://registry.terraform.io/providers/hashicorp/azurerm/4.52.0/docs/resources/kubernetes_cluster)
