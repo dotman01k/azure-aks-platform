@@ -1,0 +1,9 @@
+output "cluster_name" { value = azurerm_kubernetes_cluster.main.name }
+output "resource_group_name" { value = data.azurerm_resource_group.platform.name }
+output "acr_name" { value = azurerm_container_registry.main.name }
+output "acr_login_server" { value = azurerm_container_registry.main.login_server }
+output "key_vault_name" { value = azurerm_key_vault.main.name }
+output "workload_client_id" { value = azurerm_user_assigned_identity.workload.client_id }
+output "tenant_id" { value = data.azurerm_client_config.current.tenant_id }
+output "runner_subnet_id" { value = module.network.runner_subnet_id }
+output "egress_ip" { value = module.network.egress_ip }

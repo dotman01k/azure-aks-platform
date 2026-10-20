@@ -1,0 +1,59 @@
+name: AKS Release Application
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options: [dev, prod]
+        required: true
+        default: dev
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: aks-release-${{ inputs.environment }}
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux, aks]
+    environment: ${{ inputs.environment }}-app
+    env:
+      AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+      AKS_CLUSTER_NAME: ${{ vars.AKS_CLUSTER_NAME }}
+      ACR_NAME: ${{ vars.ACR_NAME }}
+      DEPLOY_ENV: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: Build image
+        run: |
+          az acr login --name "$ACR_NAME"
+          IMAGE="$ACR_NAME.azurecr.io/portfolio-api:$GITHUB_SHA"
+          docker build --pull -t "$IMAGE" app
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+      - name: Scan before push
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE }}
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+      - name: Push and resolve immutable digest
+        run: |
+          docker push "$IMAGE"
+          DIGEST=$(az acr repository show --name "$ACR_NAME" --image "portfolio-api:$GITHUB_SHA" --query digest -o tsv)
+          echo "IMAGE_DIGEST=$ACR_NAME.azurecr.io/portfolio-api@$DIGEST" >> "$GITHUB_ENV"
+      - name: Configure YAML tooling
+        run: |
+          python3 -m venv "$RUNNER_TEMP/aks-release-venv"
+          "$RUNNER_TEMP/aks-release-venv/bin/pip" install PyYAML==6.0.2
+          echo "$RUNNER_TEMP/aks-release-venv/bin" >> "$GITHUB_PATH"
+      - name: Deploy and verify rollout
+        run: |
+          source scripts/cluster-login.sh
+          bash scripts/deploy-app.sh

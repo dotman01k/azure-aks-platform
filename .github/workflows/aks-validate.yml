@@ -1,0 +1,49 @@
+name: AKS Validate
+on:
+  push:
+    paths: ["infra/**", "app/**", "k8s/**", "scripts/**", "tests/**", ".github/**"]
+  pull_request:
+    paths: ["infra/**", "app/**", "k8s/**", "scripts/**", "tests/**", ".github/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with: {terraform_version: 1.13.0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install PyYAML==6.0.2
+      - name: Terraform format and schema
+        working-directory: infra
+        run: |
+          terraform fmt -check -recursive
+          terraform init -backend=false -input=false -lockfile=readonly
+          terraform validate
+      - name: API tests
+        run: python -m unittest discover -s tests -v
+      - name: Shell syntax
+        run: |
+          for script in scripts/*.sh; do bash -n "$script"; done
+      - uses: azure/setup-kubectl@v4
+        with: {version: v1.34.1}
+      - name: Kubernetes overlay checks
+        run: |
+          for environment in dev prod; do
+            kubectl kustomize "k8s/app/overlays/$environment" > "/tmp/$environment.yaml"
+          done
+          python tests/check_manifests.py /tmp/dev.yaml /tmp/prod.yaml
+      - name: Build sample image
+        run: docker build -t portfolio-api:ci app
+      - name: Scan image for fixable high and critical vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: portfolio-api:ci
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: HIGH,CRITICAL

@@ -1,0 +1,100 @@
+name: AKS Infrastructure
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options: [dev, prod]
+        required: true
+        default: dev
+      operation:
+        type: choice
+        options: [plan, apply]
+        required: true
+        default: plan
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: aks-infra-${{ inputs.environment }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}-plan
+    env:
+      ARM_USE_OIDC: 'true'
+      ARM_USE_AZUREAD: 'true'
+      ARM_CLIENT_ID: ${{ vars.INFRA_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      TFVARS_JSON: ${{ vars.TFVARS_JSON }}
+      STATE_ACCOUNT: ${{ vars.STATE_STORAGE_ACCOUNT }}
+      STATE_RG: ${{ vars.STATE_RESOURCE_GROUP }}
+      DEPLOY_ENV: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.INFRA_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - uses: hashicorp/setup-terraform@v3
+        with: {terraform_version: 1.13.0, terraform_wrapper: false}
+      - name: Configure state and validate inputs
+        working-directory: infra
+        run: bash ../scripts/terraform-init.sh
+      - name: Plan
+        working-directory: infra
+        run: |
+          terraform plan -input=false -out=platform.tfplan
+          terraform show -no-color platform.tfplan > plan.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aks-plan-${{ inputs.environment }}
+          path: |
+            infra/platform.tfplan
+            infra/plan.txt
+          retention-days: 1
+  apply:
+    if: inputs.operation == 'apply'
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    env:
+      ARM_USE_OIDC: 'true'
+      ARM_USE_AZUREAD: 'true'
+      ARM_CLIENT_ID: ${{ vars.INFRA_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      TFVARS_JSON: ${{ vars.TFVARS_JSON }}
+      STATE_ACCOUNT: ${{ vars.STATE_STORAGE_ACCOUNT }}
+      STATE_RG: ${{ vars.STATE_RESOURCE_GROUP }}
+      DEPLOY_ENV: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.INFRA_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - uses: hashicorp/setup-terraform@v3
+        with: {terraform_version: 1.13.0, terraform_wrapper: false}
+      - uses: actions/download-artifact@v4
+        with:
+          name: aks-plan-${{ inputs.environment }}
+          path: infra
+      - name: Configure state
+        working-directory: infra
+        run: bash ../scripts/terraform-init.sh
+      - name: Apply reviewed plan
+        working-directory: infra
+        run: |
+          terraform apply -input=false platform.tfplan
+          terraform output -json > outputs.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aks-outputs-${{ inputs.environment }}
+          path: infra/outputs.json
+          retention-days: 7

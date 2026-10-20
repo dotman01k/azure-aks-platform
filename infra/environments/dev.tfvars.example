@@ -1,0 +1,18 @@
+subscription_id = "REPLACE_SUBSCRIPTION_ID"
+resource_group_name = "rg-aks-dev"
+name = "dotunaks"
+environment = "dev"
+location = "eastus"
+admin_group_object_ids = ["REPLACE_ENTRA_GROUP_OBJECT_ID"]
+infra_principal_id = "REPLACE_INFRA_IDENTITY_OBJECT_ID"
+app_principal_id = "REPLACE_APP_IDENTITY_OBJECT_ID"
+alert_email = "REPLACE_EMAIL"
+private_cluster = false
+authorized_cidrs = ["REPLACE_RUNNER_OR_ADMIN_PUBLIC_IP/32"]
+zones = []
+system_min = 1
+system_max = 2
+app_min = 1
+app_max = 3
+# Set a currently supported version after checking az aks get-versions --location eastus.
+# kubernetes_version = "MAJOR.MINOR"

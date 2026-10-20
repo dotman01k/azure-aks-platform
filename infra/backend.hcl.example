@@ -1,0 +1,6 @@
+resource_group_name = "rg-aks-state"
+storage_account_name = "REPLACE_GLOBALLY_UNIQUE_STORAGE_NAME"
+container_name = "tfstate"
+key = "advanced-aks-dev.tfstate"
+use_azuread_auth = true
+use_oidc = true

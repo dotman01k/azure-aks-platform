@@ -1,0 +1,36 @@
+name: AKS Initialize Platform
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options: [dev, prod]
+        required: true
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: aks-platform-${{ inputs.environment }}
+  cancel-in-progress: false
+jobs:
+  initialize:
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux, aks]
+    environment: ${{ inputs.environment }}
+    env:
+      AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+      AKS_CLUSTER_NAME: ${{ vars.AKS_CLUSTER_NAME }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      KEY_VAULT_NAME: ${{ vars.KEY_VAULT_NAME }}
+      WORKLOAD_CLIENT_ID: ${{ vars.WORKLOAD_CLIENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.INFRA_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: Cluster authentication and platform bootstrap
+        run: |
+          source scripts/cluster-login.sh
+          bash scripts/initialize-platform.sh
