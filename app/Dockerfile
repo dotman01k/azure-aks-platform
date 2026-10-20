@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm
+FROM python:3.15-slim-bookworm
 WORKDIR /app
 COPY --chown=10001:10001 server.py .
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=8080
