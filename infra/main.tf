@@ -51,7 +51,12 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
   dynamic "api_server_access_profile" {
     for_each = var.private_cluster ? [] : [1]
-    content { authorized_ip_ranges = var.authorized_cidrs }
+    content {
+      authorized_ip_ranges = distinct(concat(
+        var.authorized_cidrs,
+        ["${module.network.egress_ip}/32"]
+      ))
+    }
   }
   default_node_pool {
     name                         = "system"
